@@ -14,6 +14,10 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,7 +28,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
@@ -32,6 +36,16 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          PUBLIC_GITHUB: ${{ vars.PUBLIC_GITHUB || 'BleakRed' }}
+          PUBLIC_LINKEDIN: ${{ vars.PUBLIC_LINKEDIN || 'bleakred' }}
+          PUBLIC_EMAIL: ${{ vars.PUBLIC_EMAIL || 'shadowbleakred@gmail.com' }}
+          PUBLIC_LOCATION: ${{ vars.PUBLIC_LOCATION || 'Ulaanbaatar, Mongolia' }}
+          PUBLIC_EDUCATION: ${{ vars.PUBLIC_EDUCATION || 'Final Year, Computer Science' }}
+          PUBLIC_HOBBIES: ${{ vars.PUBLIC_HOBBIES || 'Gaming, Automation, Side Projects' }}
+          PUBLIC_GITHUB_USERS: ${{ vars.PUBLIC_GITHUB_USERS || 'BleakRed' }}
+          PUBLIC_YOUTUBE_API_KEY: ${{ secrets.PUBLIC_YOUTUBE_API_KEY || '' }}
+          PUBLIC_YOUTUBE_CHANNEL_ID: ${{ vars.PUBLIC_YOUTUBE_CHANNEL_ID || '' }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -43,7 +57,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
-    runs-on: github-pages
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
