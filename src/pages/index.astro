@@ -1,4 +1,65 @@
 ---
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import Layout from '../layouts/Layout.astro';
+import Hub from '../components/Hub';
+
+const readMd = (filename: string) => {
+  try {
+    return readFileSync(resolve('./src/content', filename), 'utf-8');
+  } catch {
+    return '';
+  }
+};
+
+const github = import.meta.env.PUBLIC_GITHUB ?? 'bleakred';
+const linkedin = import.meta.env.PUBLIC_LINKEDIN ?? 'bleakred';
+const email = import.meta.env.PUBLIC_EMAIL ?? '';
+const location = import.meta.env.PUBLIC_LOCATION ?? 'Ulaanbaatar, Mongolia';
+const education = import.meta.env.PUBLIC_EDUCATION ?? 'Final Year, CS';
+const hobbies = import.meta.env.PUBLIC_HOBBIES ?? 'Gaming, Automation, Side Projects';
+const youtubeApiKey = import.meta.env.PUBLIC_YOUTUBE_API_KEY ?? '';
+const youtubeChannelId = import.meta.env.PUBLIC_YOUTUBE_CHANNEL_ID ?? '';
+const githubUsersStr = import.meta.env.PUBLIC_GITHUB_USERS ?? 'BleakRed';
+const githubUsers = githubUsersStr.split(',').map((s: string) => s.trim()).filter(Boolean);
+
+const aboutMd = readMd('about.md');
+const skillsMd = readMd('skills.md');
+const projectsMd = readMd('projects.md');
+
+const projectSections = projectsMd.split(/^---$/m).filter(s => s.trim());
+const projects = projectSections.map(section => {
+  const lines = section.trim().split('\n');
+  const title = lines.find(l => l.startsWith('## '))?.replace('## ', '') ?? '';
+  const tagsLine = lines.find(l => l.startsWith('**Tags:**')) ?? '';
+  const descLines: string[] = [];
+  let inDesc = false;
+  for (const line of lines) {
+    if (line.startsWith('## ') || line.startsWith('**')) continue;
+    if (line.startsWith('### ')) { inDesc = true; continue; }
+    if (inDesc && line.trim()) descLines.push(line.trim());
+  }
+  const live = section.match(/\*\*Live Demo:\*\*\s+(https?:\/\/[^\s]+)/)?.[1] ?? '#';
+  const source = section.match(/\*\*Source:\*\*\s+(https?:\/\/[^\s]+)/)?.[1] ?? '#';
+  const tags = tagsLine.replace('**Tags:**', '').split('·').map((t: string) => t.trim()).filter(Boolean);
+  return { title, desc: descLines.join(' '), tags, live, source };
+});
 ---
-<Layout />
+
+<Layout>
+  <Hub
+    client:load
+    github={github}
+    linkedin={linkedin}
+    email={email}
+    location={location}
+    education={education}
+    hobbies={hobbies}
+    aboutMd={aboutMd}
+    skillsMd={skillsMd}
+    projects={projects}
+    githubUsers={githubUsers}
+    youtubeApiKey={youtubeApiKey}
+    youtubeChannelId={youtubeChannelId}
+  />
+</Layout>

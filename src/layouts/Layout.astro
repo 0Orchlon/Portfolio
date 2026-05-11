@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import Hub from '../components/Hub';
 
 interface Props {
   title?: string;
@@ -23,6 +22,6 @@ const {
     <title>{title}</title>
   </head>
   <body class="bg-stone-950 antialiased">
-    <Hub client:load />
+    <slot />
   </body>
 </html>
