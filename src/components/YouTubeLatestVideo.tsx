@@ -10,33 +10,41 @@ export default function YouTubeLatestVideo({ apiKey, channelId }: { apiKey: stri
   const [videoId, setVideoId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!apiKey || !channelId) {
       setLoading(false);
-      setError(true);
+      setError('not_configured');
       return;
     }
+
+    const controller = new AbortController();
 
     const fetchVideo = async () => {
       try {
         const ch = await fetch(
-          `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`
+          `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${channelId}&key=${apiKey}`,
+          { signal: controller.signal }
         );
+        if (!ch.ok) throw new Error(`API ${ch.status}`);
         const chData = await ch.json();
         const uploadsId = chData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
         if (!uploadsId) throw new Error('no uploads');
 
         const pl = await fetch(
-          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=10&playlistId=${uploadsId}&key=${apiKey}`
+          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=10&playlistId=${uploadsId}&key=${apiKey}`,
+          { signal: controller.signal }
         );
+        if (!pl.ok) throw new Error(`API ${pl.status}`);
         const plData = await pl.json();
         const ids = (plData.items || []).map((i: any) => i.contentDetails.videoId).join(',');
 
         const vids = await fetch(
-          `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=${apiKey}`
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${ids}&key=${apiKey}`,
+          { signal: controller.signal }
         );
+        if (!vids.ok) throw new Error(`API ${vids.status}`);
         const vidsData = await vids.json();
 
         const found = (vidsData.items || []).find((v: any) => {
@@ -50,13 +58,15 @@ export default function YouTubeLatestVideo({ apiKey, channelId }: { apiKey: stri
           setTitle(found.snippet.title);
         }
         setLoading(false);
-      } catch {
+      } catch (err: any) {
+        if (err.name === 'AbortError') return;
         setLoading(false);
-        setError(true);
+        setError('fetch_failed');
       }
     };
 
     fetchVideo();
+    return () => controller.abort();
   }, [apiKey, channelId]);
 
   if (loading) {
@@ -68,12 +78,15 @@ export default function YouTubeLatestVideo({ apiKey, channelId }: { apiKey: stri
   }
 
   if (error || !videoId) {
+    const msg = error === 'not_configured'
+      ? 'YouTube API key or channel ID not configured'
+      : error === 'fetch_failed'
+        ? 'Could not load latest video — check API key and channel ID'
+        : 'No videos found';
     return (
       <div className="flex flex-col items-center justify-center h-40 text-stone-500 text-sm gap-2">
         <span className="opacity-50 text-lg">▶</span>
-        {!apiKey || !channelId
-          ? <span>YouTube API key or channel ID not configured</span>
-          : <span>Could not load latest video</span>}
+        <span>{msg}</span>
       </div>
     );
   }

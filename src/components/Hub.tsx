@@ -25,14 +25,14 @@ interface Props {
   youtubeChannelId: string;
 }
 
-const NAV_ITEMS: { id: Section; label: string; icon: string; side: 'left' | 'right'; offsetY: number }[] = [
-  { id: 'home', label: 'Home', icon: '⬡', side: 'left', offsetY: -100 },
-  { id: 'about', label: 'About', icon: '◆', side: 'left', offsetY: -35 },
-  { id: 'skills', label: 'Skills', icon: '◇', side: 'left', offsetY: 35 },
-  { id: 'github', label: 'GitHub', icon: '⌥', side: 'left', offsetY: 100 },
-  { id: 'projects', label: 'Projects', icon: '▣', side: 'right', offsetY: -65 },
-  { id: 'youtube', label: 'YouTube', icon: '▶', side: 'right', offsetY: 0 },
-  { id: 'contact', label: 'Contact', icon: '◎', side: 'right', offsetY: 65 },
+const NAV_ITEMS: { id: Section; label: string; icon: string; side: 'left' | 'right' }[] = [
+  { id: 'home', label: 'Home', icon: '⬡', side: 'left' },
+  { id: 'about', label: 'About', icon: '◆', side: 'left' },
+  { id: 'skills', label: 'Skills', icon: '◇', side: 'left' },
+  { id: 'github', label: 'GitHub', icon: '⌥', side: 'left' },
+  { id: 'projects', label: 'Projects', icon: '▣', side: 'right' },
+  { id: 'youtube', label: 'YouTube', icon: '▶', side: 'right' },
+  { id: 'contact', label: 'Contact', icon: '◎', side: 'right' },
 ];
 
 const SECTION_ORDER: Section[] = ['home', 'about', 'skills', 'github', 'projects', 'youtube', 'contact'];
@@ -68,19 +68,32 @@ function parseSkills(md: string): { title: string; items: string[] }[] {
 }
 
 // ---------- Nav Button ----------
-function NavButton({ label, icon, active, onClick }: {
-  label: string; icon: string; active: boolean; onClick: () => void;
+function NavButton({ label, icon, active, onClick, side, skew }: {
+  label: string; icon: string; active: boolean; onClick: () => void; side: 'left' | 'right'; skew?: number;
 }) {
+  const clipPath = side === 'left'
+    ? 'path("M0,0 L86%,2% Q98%,50% 86%,98% L0,100% Z")'
+    : 'path("M14%,2% Q2%,50% 14%,98% L100%,100% L100%,0% Z")';
+
   return (
     <button onClick={onClick}
-      className={`group flex flex-col items-center gap-1.5 py-3 px-3 rounded-lg transition-all duration-300 cursor-pointer whitespace-nowrap
+      style={{
+        clipPath,
+        transform: skew ? `skewY(${skew}deg)` : undefined,
+      }}
+      className={`group relative flex flex-col items-center gap-1.5 py-3.5 px-4 transition-all duration-300 cursor-pointer whitespace-nowrap w-[68px] border
         ${active
-          ? 'text-amber-400 bg-amber-500/10 border border-amber-500/40 shadow-[0_0_15px_rgba(201,168,76,0.15)]'
-          : 'text-stone-500 hover:text-amber-300/80 hover:bg-stone-800/50 border border-transparent'
+          ? 'text-amber-400 bg-amber-500/12 border-amber-500/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]'
+          : 'text-white/40 bg-white/[0.04] backdrop-blur-sm border-white/[0.06] hover:bg-white/[0.08] hover:text-white/70'
         }`}
     >
       <span className="text-lg leading-none">{icon}</span>
       <span className="text-[10px] uppercase tracking-widest font-medium">{label}</span>
+      {/* Connector line to circle */}
+      <div className={`absolute top-1/2 -translate-y-1/2 w-4 h-px
+        ${active ? 'bg-amber-500/40' : 'bg-white/10'}
+        ${side === 'left' ? 'right-[-14px]' : 'left-[-14px]'}
+      `} />
     </button>
   );
 }
@@ -177,9 +190,11 @@ function SkillsSection({ skillsMd }: { skillsMd: string }) {
 
 function GitHubSection({ githubUsers }: { githubUsers: string[] }) {
   return (
-    <div className="h-full overflow-y-auto animate-fadeIn">
-      <h2 className="text-xl font-bold text-amber-100 mb-4">GitHub</h2>
-      <GitHubContributions users={githubUsers} />
+    <div className="h-full overflow-y-auto animate-fadeIn flex flex-col">
+      <h2 className="text-xl font-bold text-amber-100 mb-4 flex-shrink-0">GitHub</h2>
+      <div className="flex-1 flex items-center justify-center">
+        <GitHubContributions users={githubUsers} />
+      </div>
     </div>
   );
 }
@@ -305,20 +320,24 @@ export default function Hub(props: Props) {
 
       <div className="relative flex items-center justify-center transition-all duration-300"
         style={{
-          transform: `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+          transform: `perspective(1200px) rotateX(${rotateX - 4}deg) rotateY(${rotateY}deg)`,
         }}>
 
         {/* Left Nav Column */}
-        <div className="flex flex-col items-end gap-4 z-10">
-          {NAV_ITEMS.filter(i => i.side === 'left').map(item => (
-            <div key={item.id} style={{ transform: `translateY(${item.offsetY}px)` }}>
-              <NavButton {...item} active={section === item.id} onClick={() => handleNav(item.id)} />
-            </div>
-          ))}
+        <div className="flex flex-col items-end gap-2 z-10">
+          {(NAV_ITEMS.filter(i => i.side === 'left') as typeof NAV_ITEMS).map((item, idx, arr) => {
+            const spread = (idx - (arr.length - 1) / 2) * 55;
+            const skew = (idx - (arr.length - 1) / 2) * 2.5;
+            return (
+              <div key={item.id} style={{ transform: `translateY(${spread}px)` }}>
+                <NavButton {...item} side="left" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
+              </div>
+            );
+          })}
         </div>
 
         {/* Left gap */}
-        <div className="w-10 flex-shrink-0" />
+        <div className="w-5 flex-shrink-0" />
 
         {/* Center Circle */}
         <div className="w-[80vh] h-[80vh] min-w-[480px] min-h-[480px] max-w-[780px] max-h-[780px] rounded-full bg-stone-900/80 backdrop-blur-md border border-stone-700/40 overflow-hidden relative shadow-2xl
@@ -330,15 +349,18 @@ export default function Hub(props: Props) {
         </div>
 
         {/* Right gap */}
-        <div className="w-10 flex-shrink-0" />
+        <div className="w-5 flex-shrink-0" />
 
-        {/* Right Nav Column */}
-        <div className="flex flex-col items-start gap-4 z-10">
-          {NAV_ITEMS.filter(i => i.side === 'right').map(item => (
-            <div key={item.id} style={{ transform: `translateY(${item.offsetY}px)` }}>
-              <NavButton {...item} active={section === item.id} onClick={() => handleNav(item.id)} />
-            </div>
-          ))}
+        {/* Right Nav Grid (2x3) */}
+        <div className="z-10" style={{ transform: 'rotate(4deg)' }}>
+          <div className="grid grid-cols-2 gap-2">
+            {(NAV_ITEMS.filter(i => i.side === 'right') as typeof NAV_ITEMS).map((item, idx, arr) => {
+              const skew = (idx - (arr.length - 1) / 2) * 2.5;
+              return (
+                <NavButton key={item.id} {...item} side="right" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
+              );
+            })}
+          </div>
         </div>
 
       </div>
