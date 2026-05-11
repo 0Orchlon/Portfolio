@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="BleakRed — Developer">
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#hero" class="font-bold text-lg text-slate-900">bleakred</a>
+      <ul class="flex gap-6 text-sm text-slate-600">
+        <li><a href="#about" class="hover:text-slate-900 transition-colors">About</a></li>
+        <li><a href="#skills" class="hover:text-slate-900 transition-colors">Skills</a></li>
+        <li><a href="#projects" class="hover:text-slate-900 transition-colors">Projects</a></li>
+        <li><a href="#contact" class="hover:text-slate-900 transition-colors">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16">
+      <div class="max-w-xl">
+        <div class="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 mx-auto mb-6 flex items-center justify-center text-white text-4xl font-bold">
+          B
+        </div>
+        <h1 class="text-4xl font-bold text-slate-900 mb-3">BleakRed</h1>
+        <p class="text-lg text-slate-600 mb-6">Full-stack developer & university student finishing my degree.</p>
+        <p class="text-slate-500 mb-8 max-w-md mx-auto">
+          I build web apps, automate things, and enjoy the process of turning ideas into working software.
+          Currently wrapping up my final year.
+        </p>
+        <div class="flex gap-4 justify-center">
+          <a href="#projects"
+             class="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+            View Projects
+          </a>
+          <a href="#contact"
+             class="px-6 py-2.5 border border-slate-300 text-slate-700 rounded-lg font-medium hover:bg-slate-100 transition-colors">
+            Get in Touch
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="py-24 px-6">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-6">About Me</h2>
+        <div class="space-y-4 text-slate-600 leading-relaxed">
+          <p>
+            Final-year university student with a passion for full-stack development. I've worked on
+            collaborative web apps, real-time drawing tools, and kanban boards — the kind of projects
+            that feel like real tools people actually use.
+          </p>
+          <p>
+            I enjoy the full cycle: from designing the data model to shipping the UI. My go-to stack
+            is TypeScript with React/Next.js on the frontend and Node.js/Prisma on the backend.
+            Comfortable with databases, REST APIs, and socket-based real-time features.
+          </p>
+          <p>
+            When I'm not coding, I game. Simple as that.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="py-24 px-6 bg-white">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">Skills & Tech</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {[
+            'TypeScript', 'JavaScript', 'React', 'Next.js', 'Node.js',
+            'Express', 'Prisma', 'PostgreSQL', 'Tailwind CSS', 'Socket.io',
+            'Git', 'Docker', 'Vite', 'Astro', 'Figma',
+          ].map((skill) => (
+            <div class="px-4 py-2.5 bg-slate-50 rounded-lg text-center text-sm font-medium text-slate-700 border border-slate-200">
+              {skill}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="py-24 px-6">
+      <div class="max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold text-slate-900 mb-8">Projects</h2>
+        <div class="space-y-6">
+
+          <!-- Project 1 -->
+          <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="font-semibold text-lg text-slate-900 mb-1">Notion Clone</h3>
+            <p class="text-sm text-slate-500 mb-3">Full-stack collaborative workspace app</p>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+              Real-time collaborative canvas, pages, kanban boards, and chat. Built with Next.js,
+              Node.js, Socket.io, and PostgreSQL. Includes auth, file management, and live co-op features.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              {['Next.js', 'TypeScript', 'Socket.io', 'Prisma', 'PostgreSQL'].map((t) => (
+                <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded">{t}</span>
+              ))}
+            </div>
+            <div class="flex gap-4 text-sm">
+              <a href="#" class="text-blue-600 hover:underline">Live Demo</a>
+              <a href="#" class="text-slate-600 hover:text-slate-900">Source</a>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="p-6 bg-white rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="font-semibold text-lg text-slate-900 mb-1">Portfolio (this site)</h3>
+            <p class="text-sm text-slate-500 mb-3">Personal portfolio built with Astro + Tailwind</p>
+            <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+              Static site deployed on GitHub Pages. Minimal JS footprint, fast loading,
+              responsive design. Built to showcase projects and skills.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              {['Astro', 'Tailwind CSS', 'GitHub Pages'].map((t) => (
+                <span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-700 rounded">{t}</span>
+              ))}
+            </div>
+            <div class="flex gap-4 text-sm">
+              <a href="#" class="text-slate-600 hover:text-slate-900">Source</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="py-24 px-6 bg-white">
+      <div class="max-w-md mx-auto text-center">
+        <h2 class="text-2xl font-bold text-slate-900 mb-4">Let's Talk</h2>
+        <p class="text-slate-600 mb-8">
+          Whether it's a project idea, job opportunity, or just a chat — feel free to reach out.
+        </p>
+        <div class="space-y-3">
+          <a href="mailto:bleakred@example.com"
+             class="block px-6 py-3 bg-slate-900 text-white rounded-lg font-medium hover:bg-slate-800 transition-colors">
+            Email Me
+          </a>
+          <div class="flex justify-center gap-4 pt-2">
+            <a href="https://github.com/bleakred" target="_blank"
+               class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-100 transition-colors">
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/bleakred" target="_blank"
+               class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-100 transition-colors">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="py-8 text-center text-sm text-slate-400 border-t border-slate-200">
+    <p>© 2025 BleakRed. Built with Astro & Tailwind.</p>
+  </footer>
+</Layout>
