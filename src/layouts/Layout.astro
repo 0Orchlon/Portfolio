@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Hub from '../components/Hub';
 
 interface Props {
   title?: string;
@@ -7,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Portfolio',
-  description = 'Personal portfolio website'
+  title = 'BleakRed — Portfolio',
+  description = 'Developer portfolio',
 } = Astro.props;
 ---
 
@@ -21,7 +22,7 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased">
-    <slot />
+  <body class="bg-stone-950 antialiased">
+    <Hub client:load />
   </body>
 </html>
