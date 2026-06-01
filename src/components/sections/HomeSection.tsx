@@ -1,0 +1,32 @@
+interface Props {
+  github: string;
+  email: string;
+}
+
+export default function HomeSection({ github, email }: Props) {
+  return (
+    <div className="flex flex-col items-center justify-center h-full gap-5 animate-fadeIn">
+      <div className="w-28 h-28 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-5xl font-bold shadow-lg shadow-amber-900/30 flex-shrink-0">
+        B
+      </div>
+      <div className="text-center">
+        <h1 className="text-3xl font-bold text-amber-100 mb-1">BleakRed</h1>
+        <p className="text-amber-400/80 text-base mb-3">Developer · Student · Creator</p>
+        <p className="text-stone-400 text-sm leading-relaxed max-w-xs mx-auto">
+          Final-year developer crafting tools and experiences that feel alive.
+          Currently based in Ulaanbaatar.
+        </p>
+      </div>
+      <div className="flex gap-3">
+        <a href={`https://github.com/${github}`} target="_blank" rel="noopener noreferrer"
+          className="px-4 py-2 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-lg text-xs hover:bg-amber-500/20 transition-colors">
+          GitHub
+        </a>
+        <a href={`mailto:${email}`}
+          className="px-4 py-2 bg-stone-700 border border-stone-600 text-stone-300 rounded-lg text-xs hover:bg-stone-600 transition-colors">
+          Email
+        </a>
+      </div>
+    </div>
+  );
+}
