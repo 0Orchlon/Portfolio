@@ -8,10 +8,12 @@ import YouTubeSection from './sections/YouTubeSection';
 import ContactSection from './sections/ContactSection';
 import LeetCodeSection from './sections/LeetCodeSection';
 import HackerRankSection from './sections/HackerRankSection';
+import MouseTracker from './MouseTracker';
 
 type Section = 'home' | 'about' | 'skills' | 'github' | 'leetcode' | 'hackerrank' | 'projects' | 'youtube' | 'contact';
 
 interface Props {
+  avatar: string;
   github: string;
   linkedin: string;
   email: string;
@@ -125,8 +127,8 @@ export default function Hub(props: Props) {
   const renderSection = () => {
     const common = { github: props.github, linkedin: props.linkedin, email: props.email };
     switch (section) {
-      case 'home': return <HomeSection github={props.github} email={props.email} />;
-      case 'about': return <AboutSection location={props.location} education={props.education} hobbies={props.hobbies} aboutMd={props.aboutMd} />;
+      case 'home': return <HomeSection avatar={props.avatar} github={props.github} email={props.email} />;
+      case 'about': return <AboutSection avatar={props.avatar} location={props.location} education={props.education} hobbies={props.hobbies} aboutMd={props.aboutMd} />;
       case 'skills': return <SkillsSection skillsMd={props.skillsMd} />;
       case 'github': return <GitHubSection githubUsers={props.githubUsers} />;
       case 'leetcode': return <LeetCodeSection username={props.leetcode} />;
@@ -207,6 +209,8 @@ export default function Hub(props: Props) {
           </div>
         </div>
       )}
+
+      <MouseTracker />
 
       {/* Corner accents */}
       {!isMobile && ['top-left', 'top-right', 'bottom-left', 'bottom-right'].map(pos => (

@@ -8,3 +8,12 @@
 .animate-fadeIn {
   animation: fadeIn 0.4s ease-out forwards;
 }
+
+@media (hover: hover) and (pointer: fine) {
+  html {
+    cursor: none;
+  }
+  a, button, [role="button"], input, textarea, select, label {
+    cursor: none;
+  }
+}

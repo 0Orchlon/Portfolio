@@ -4,6 +4,7 @@
 
 export const config = {
   // ── Personal Info ──
+  avatar: 'https://github.com/bleakred.png',
   github: 'bleakred',
   linkedin: 'bleakred',
   email: 'sw22d045@mandakh.edu.mn',
