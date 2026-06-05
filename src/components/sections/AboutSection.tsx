@@ -13,12 +13,12 @@ export default function AboutSection({ location, education, hobbies, aboutMd }: 
     <div className="h-full overflow-y-auto animate-fadeIn text-left space-y-4">
       <h2 className="text-xl font-bold text-amber-100">About Me</h2>
       <div className="flex gap-4 items-start">
-        <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-amber-600 to-orange-700 flex-shrink-0 flex items-center justify-center text-2xl font-bold text-amber-100">
+        <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg bg-gradient-to-br from-amber-600 to-orange-700 flex-shrink-0 flex items-center justify-center text-lg md:text-2xl font-bold text-amber-100">
           B
         </div>
         <div className="flex-1 min-w-0" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {[
           { label: 'Location', value: location },
           { label: 'Education', value: education },

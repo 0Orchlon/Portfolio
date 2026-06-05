@@ -19,7 +19,7 @@ export default function SkillsSection({ skillsMd }: Props) {
   return (
     <div className="h-full overflow-y-auto animate-fadeIn">
       <h2 className="text-xl font-bold text-amber-100 mb-4">Skills</h2>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {groups.map(group => (
           <div key={group.title} className="p-3 bg-stone-800/50 rounded-lg border border-stone-700/50">
             <p className="text-amber-400/60 text-[10px] mb-2 uppercase tracking-wider">{group.title}</p>

@@ -6,7 +6,7 @@ export function renderMd(md: string): string {
     .replace(/\*(.+?)\*/g, '<em class="italic text-stone-300">$1</em>')
     .replace(/`(.+?)`/g, '<code class="px-1.5 py-0.5 bg-stone-700 rounded text-xs text-amber-300">$1</code>')
     .replace(/^- (.+)$/gm, '<li class="ml-4 list-disc text-stone-400 text-sm">$1</li>')
-    .replace(/^(?!<[hl]|<li)(.+)$/gm, (m: string) =>
+    .replace(/^(?!<)(.+)$/gm, (m: string) =>
       m.trim() ? `<p class="text-stone-400 text-sm leading-relaxed mb-2">${m}</p>` : '',
     );
 }

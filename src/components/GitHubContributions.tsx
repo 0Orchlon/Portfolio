@@ -55,7 +55,7 @@ function Heatmap({ days }: { days: Day[] }) {
           return (
             <div
               key={wi}
-              className="w-3 text-[8px] text-stone-600 leading-none"
+              className="w-2 sm:w-3 text-[7px] sm:text-[8px] text-stone-600 leading-none"
             >
               {label ? label.month : ""}
             </div>
@@ -69,7 +69,7 @@ function Heatmap({ days }: { days: Day[] }) {
               <div
                 key={di}
                 title={`${day.date}: ${day.count} contributions`}
-                className={`w-3 h-3 rounded-sm ${LEVEL_COLORS[day.level] ?? "bg-stone-800"}`}
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-sm ${LEVEL_COLORS[day.level] ?? "bg-stone-800"}`}
               />
             ))}
           </div>
@@ -78,7 +78,7 @@ function Heatmap({ days }: { days: Day[] }) {
       <div className="flex items-center gap-1.5 mt-2 text-[10px] text-stone-500">
         <span>Less</span>
         {Object.values(LEVEL_COLORS).map((c, i) => (
-          <div key={i} className={`w-3 h-3 rounded-sm ${c}`} />
+          <div key={i} className={`w-2 h-2 sm:w-3 sm:h-3 rounded-sm ${c}`} />
         ))}
         <span>More</span>
       </div>
