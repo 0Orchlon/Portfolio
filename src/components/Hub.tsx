@@ -40,7 +40,7 @@ const NAV_ITEMS: { id: Section; label: string; icon: string; side: 'left' | 'rig
   { id: 'skills', label: 'Skills', icon: '◇', side: 'left' },
   { id: 'github', label: 'GitHub', icon: '⌥', side: 'left' },
   { id: 'leetcode', label: 'LeetCode', icon: '⚡', side: 'left' },
-  { id: 'hackerrank', label: 'HackerRank', icon: '⌨', side: 'left' },
+  { id: 'hackerrank', label: 'HackerRank', icon: '⌨', side: 'right' },
   { id: 'projects', label: 'Projects', icon: '▣', side: 'right' },
   { id: 'youtube', label: 'YouTube', icon: '▶', side: 'right' },
   { id: 'contact', label: 'Contact', icon: '◎', side: 'right' },
@@ -151,15 +151,16 @@ export default function Hub(props: Props) {
           transform: isMobile ? 'none' : `perspective(1200px) rotateX(${rotateX - 4}deg) rotateY(${rotateY}deg)`,
         }}>
 
-        {/* Desktop: Left Nav Column */}
+        {/* Desktop: Left Nav Column (curved along circle edge) */}
         {!isMobile && (
           <>
-            <div className="flex flex-col items-end gap-2 z-10">
+            <div className="flex flex-col items-end gap-2 z-20">
               {(NAV_ITEMS.filter(i => i.side === 'left') as typeof NAV_ITEMS).map((item, idx, arr) => {
                 const spread = (idx - (arr.length - 1) / 2) * 55;
-                const skew = (idx - (arr.length - 1) / 2) * 2.5;
+                const skew = (idx - (arr.length - 1) / 2) * 5;
+                const curveX = spread * spread * 0.01 - 40;
                 return (
-                  <div key={item.id} style={{ transform: `translateY(${spread}px)` }}>
+                  <div key={item.id} style={{ transform: `translateY(${spread}px) translateX(${curveX}px)` }}>
                     <NavButton {...item} side="left" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
                   </div>
                 );
@@ -177,18 +178,20 @@ export default function Hub(props: Props) {
           </div>
         </div>
 
-        {/* Desktop: Right Nav Grid */}
+        {/* Desktop: Right Nav Column (curved along circle edge) */}
         {!isMobile && (
           <>
-            <div className="z-10" style={{ transform: 'rotate(4deg)' }}>
-              <div className="grid grid-cols-2 gap-2">
-                {(NAV_ITEMS.filter(i => i.side === 'right') as typeof NAV_ITEMS).map((item, idx, arr) => {
-                  const skew = (idx - (arr.length - 1) / 2) * 2.5;
-                  return (
-                    <NavButton key={item.id} {...item} side="right" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
-                  );
-                })}
-              </div>
+            <div className="flex flex-col items-start gap-2 z-10 ml-1">
+              {(NAV_ITEMS.filter(i => i.side === 'right') as typeof NAV_ITEMS).map((item, idx, arr) => {
+                const spread = (idx - (arr.length - 1) / 2) * 55;
+                const skew = (idx - (arr.length - 1) / 2) * 2.5;
+                const curveX = -(spread * spread * 0.01 - 40);
+                return (
+                  <div key={item.id} style={{ transform: `translateY(${spread}px) translateX(${curveX}px)` }}>
+                    <NavButton {...item} side="right" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
+                  </div>
+                );
+              })}
             </div>
           </>
         )}
