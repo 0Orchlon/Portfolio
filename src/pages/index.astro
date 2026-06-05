@@ -9,6 +9,7 @@ const projects = config.projects.map(p => ({
   tags: p.tags,
   live: p.live,
   source: p.source,
+  android: 'android' in p ? p.android : undefined,
 }));
 ---
 
@@ -25,8 +26,7 @@ const projects = config.projects.map(p => ({
     skillsMd={config.skills}
     projects={projects}
     githubUsers={config.githubUsers}
-    youtubeApiKey={config.youtubeApiKey}
-    youtubeChannelId={config.youtubeChannelId}
+    youtubeVideos={config.youtubeVideos}
     leetcode={config.leetcode}
     hackerrank={config.hackerrank}
   />

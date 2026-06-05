@@ -26,10 +26,10 @@ interface Props {
     tags: string[];
     live: string;
     source: string;
+    android?: string;
   }[];
   githubUsers: string[];
-  youtubeApiKey: string;
-  youtubeChannelId: string;
+  youtubeVideos: string[];
   leetcode: string;
   hackerrank: string;
 }
@@ -132,7 +132,7 @@ export default function Hub(props: Props) {
       case 'leetcode': return <LeetCodeSection username={props.leetcode} />;
       case 'hackerrank': return <HackerRankSection username={props.hackerrank} />;
       case 'projects': return <ProjectsSection projects={props.projects} github={props.github} />;
-      case 'youtube': return <YouTubeSection apiKey={props.youtubeApiKey} channelId={props.youtubeChannelId} />;
+      case 'youtube': return <YouTubeSection videos={props.youtubeVideos} />;
       case 'contact': return <ContactSection {...common} />;
     }
   };
