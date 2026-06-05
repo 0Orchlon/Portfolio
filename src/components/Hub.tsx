@@ -156,9 +156,9 @@ export default function Hub(props: Props) {
           <>
             <div className="flex flex-col items-end gap-2 z-20">
               {(NAV_ITEMS.filter(i => i.side === 'left') as typeof NAV_ITEMS).map((item, idx, arr) => {
-                const spread = (idx - (arr.length - 1) / 2) * 55;
+                const spread = (idx - (arr.length - 1) / 2) * 5;
                 const skew = (idx - (arr.length - 1) / 2) * 5;
-                const curveX = spread * spread * 0.01 - 40;
+                const curveX = spread * spread * 0.6 - 40;
                 return (
                   <div key={item.id} style={{ transform: `translateY(${spread}px) translateX(${curveX}px)` }}>
                     <NavButton {...item} side="left" skew={skew} active={section === item.id} onClick={() => handleNav(item.id)} />
