@@ -9,6 +9,7 @@ import ContactSection from './sections/ContactSection';
 import LeetCodeSection from './sections/LeetCodeSection';
 import HackerRankSection from './sections/HackerRankSection';
 import MouseTracker from './MouseTracker';
+import CodeRain from './CodeRain';
 
 type Section = 'home' | 'about' | 'skills' | 'github' | 'leetcode' | 'hackerrank' | 'projects' | 'youtube' | 'contact';
 
@@ -141,11 +142,7 @@ export default function Hub(props: Props) {
 
   return (
     <div className="w-full h-screen bg-stone-950 flex flex-col md:flex-row md:items-center md:justify-center overflow-hidden">
-      <div className="fixed inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage: 'radial-gradient(circle, #c9a84c 1px, transparent 1px)',
-          backgroundSize: '40px 40px',
-        }} />
+      <CodeRain />
 
       {/* Main content area with perspective */}
       <div className="flex-1 md:flex-none flex items-center justify-center transition-all duration-300 min-h-0"
