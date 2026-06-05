@@ -76,7 +76,7 @@ function NavButton({ label, icon, active, onClick, side, skew, mobile }: {
   return (
     <button onClick={onClick}
       style={{ clipPath, transform: skew ? `skewY(${skew}deg)` : undefined }}
-      className={`group relative flex flex-col items-center gap-1.5 py-3.5 px-4 transition-all duration-300 cursor-pointer whitespace-nowrap w-[68px] border
+      className={`group relative flex flex-col items-center gap-1.5 py-3.5 px-4 transition-all duration-300 cursor-pointer whitespace-nowrap w-[68px] border hover:scale-110
         ${active
           ? 'text-amber-400 bg-amber-500/12 border-amber-500/30 shadow-[0_0_20px_rgba(201,168,76,0.12)]'
           : 'text-white/40 bg-white/[0.04] backdrop-blur-sm border-white/[0.06] hover:bg-white/[0.08] hover:text-white/70'
