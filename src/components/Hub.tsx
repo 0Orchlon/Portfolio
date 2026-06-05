@@ -9,6 +9,7 @@ import ContactSection from './sections/ContactSection';
 import LeetCodeSection from './sections/LeetCodeSection';
 import HackerRankSection from './sections/HackerRankSection';
 import GamesSection from './sections/GamesSection';
+import AudioPlayer from './AudioPlayer';
 import MouseTracker from './MouseTracker';
 import CodeRain from './CodeRain';
 
@@ -36,6 +37,7 @@ interface Props {
   youtubeVideos: string[];
   leetcode: string;
   hackerrank: string;
+  musicUrl: string;
 }
 
 const NAV_ITEMS: { id: Section; label: string; icon: string; side: 'left' | 'right' }[] = [
@@ -210,6 +212,7 @@ export default function Hub(props: Props) {
         </div>
       )}
 
+      <AudioPlayer src={props.musicUrl} />
       <MouseTracker />
 
       {/* Corner accents */}

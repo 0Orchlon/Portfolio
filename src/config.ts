@@ -13,6 +13,9 @@ export const config = {
   hobbies: 'Gaming, Automation, Side Projects',
   githubUsers: ['BleakRed', '0Orchlon'],
 
+  // ── Background Music (put your .mp3 in public/assets/audio/) ──
+  musicUrl: '/Portfolio/assets/audio/AKBabelOST.mp3',
+
   // ── Coding Profiles (leave empty to hide) ──
   leetcode: 'BleakRed',
   hackerrank: '@BleakRed',
