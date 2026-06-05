@@ -8,10 +8,11 @@ import YouTubeSection from './sections/YouTubeSection';
 import ContactSection from './sections/ContactSection';
 import LeetCodeSection from './sections/LeetCodeSection';
 import HackerRankSection from './sections/HackerRankSection';
+import GamesSection from './sections/GamesSection';
 import MouseTracker from './MouseTracker';
 import CodeRain from './CodeRain';
 
-type Section = 'home' | 'about' | 'skills' | 'github' | 'leetcode' | 'hackerrank' | 'projects' | 'youtube' | 'contact';
+type Section = 'home' | 'about' | 'skills' | 'github' | 'leetcode' | 'hackerrank' | 'projects' | 'youtube' | 'contact' | 'games';
 
 interface Props {
   avatar: string;
@@ -47,6 +48,7 @@ const NAV_ITEMS: { id: Section; label: string; icon: string; side: 'left' | 'rig
   { id: 'projects', label: 'Projects', icon: '▣', side: 'right' },
   { id: 'youtube', label: 'YouTube', icon: '▶', side: 'right' },
   { id: 'contact', label: 'Contact', icon: '◎', side: 'right' },
+  { id: 'games', label: 'Games', icon: '◈', side: 'right' },
 ];
 
 function NavButton({ label, icon, active, onClick, side, skew, mobile }: {
@@ -137,6 +139,7 @@ export default function Hub(props: Props) {
       case 'projects': return <ProjectsSection projects={props.projects} github={props.github} />;
       case 'youtube': return <YouTubeSection videos={props.youtubeVideos} />;
       case 'contact': return <ContactSection {...common} />;
+      case 'games': return <GamesSection />;
     }
   };
 
