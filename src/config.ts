@@ -4,29 +4,41 @@
 
 export const config = {
   // ── Personal Info ──
-  name: 'BleakRed',
-  tagline: 'Developer · Junior · Creator',
-  bio: 'Junior developer crafting tools and experiences that feel alive. Currently based in Ulaanbaatar.',
+  name: "BleakRed",
+  tagline: "Developer · Junior · Creator",
+  bio: "CS graduate crafting tools and experiences that feel alive. Currently based in Ulaanbaatar.",
+  resume: "", // path to resume PDF (e.g. '/Portfolio/resume.pdf') — leave empty to hide button
+
+  avatar: "https://github.com/bleakred.png",
+  github: "bleakred",
+  linkedin: "bleakred",
+  email: "sw22d045@mandakh.edu.mn",
+  location: "Ulaanbaatar, Mongolia",
+  education: "CS Graduate",
+  hobbies: "Gaming, Automation, Side Projects",
   
-  avatar: 'https://github.com/bleakred.png',
-  github: 'bleakred',
-  linkedin: 'bleakred',
-  email: 'sw22d045@mandakh.edu.mn',
-  location: 'Ulaanbaatar, Mongolia',
-  education: 'CS Graduate',
-  hobbies: 'Gaming, Automation, Side Projects',
-  githubUsers: ['BleakRed', '0Orchlon'],
+  githubUsers: ["BleakRed", "0Orchlon"],
 
   // ── Background Music (put your .mp3 in public/assets/audio/) ──
-  musicUrl: '/Portfolio/assets/audio/AKBabelOST.mp3',
+  musicUrl: "/Portfolio/assets/audio/AKBabelOST.mp3",
 
   // ── Coding Profiles (leave empty to hide) ──
-  leetcode: 'BleakRed',
-  hackerrank: '@BleakRed',
+  leetcode: "BleakRed",
+  hackerrank: "@BleakRed",
   youtubeVideos: [
-    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    'https://youtu.be/Qz1uIcq53Go?si'
-  ],
+    "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "https://youtu.be/Qz1uIcq53Go?si",
+  ], // add YouTube video URLs to show the section
+
+  // ── Contact Section ──
+  contact: {
+    heading: "Get in Touch",
+    description:
+      "Whether it's a project idea, a job opportunity, or just a chat — my inbox is always open.",
+    emailLabel: "Send an Email",
+    githubLabel: "GitHub",
+    linkedinLabel: "LinkedIn",
+  },
 
   // ── About Section (Markdown) ──
   about: `# About Me
@@ -64,26 +76,31 @@ Vitest · Playwright · Python · Bash · Linux · CSS Animations`,
   // ── Projects ──
   projects: [
     {
-      title: 'Notion Clone',
-      tags: ['Next.js', 'TypeScript', 'Socket.io', 'Prisma', 'PostgreSQL'],
-      description: 'Real-time collaborative canvas, pages, kanban boards, and chat. Built with Next.js, Node.js, Socket.io, and PostgreSQL. Includes auth, file management, and live co-op drawing features.',
-      live: 'https://bleakdiploma.vercel.app',
-      source: 'https://github.com/BleakRed/Digital-note-taking-and-collaboration-system',
+      title: "Notion Clone",
+      tags: ["Next.js", "TypeScript", "Socket.io", "Prisma", "PostgreSQL"],
+      description:
+        "Real-time collaborative canvas, pages, kanban boards, and chat. Built with Next.js, Node.js, Socket.io, and PostgreSQL. Includes auth, file management, and live co-op drawing features.",
+      live: "https://bleakdiploma.vercel.app",
+      source:
+        "https://github.com/BleakRed/Digital-note-taking-and-collaboration-system",
     },
     {
-      title: 'Portfolio (this site)',
-      tags: ['Astro', 'Tailwind CSS', 'React', 'GitHub Pages'],
-      description: 'Static site deployed on GitHub Pages. Minimal JS footprint, fast loading, responsive design. Built to showcase projects and skills. Features a parallax hub layout inspired by Arknights: Endfield.',
-      live: 'https://0Orchlon.github.io/portfolio',
-      source: 'https://github.com/0Orchlon/portfolio',
+      title: "Portfolio (this site)",
+      tags: ["Astro", "Tailwind CSS", "React", "GitHub Pages"],
+      description:
+        "Static site deployed on GitHub Pages. Minimal JS footprint, fast loading, responsive design. Built to showcase projects and skills. Features a parallax hub layout inspired by Arknights: Endfield.",
+      live: "https://0Orchlon.github.io/portfolio",
+      source: "https://github.com/0Orchlon/portfolio",
     },
     {
-      title: 'TicTacToe',
-      tags: ['Flutter', 'Dart', 'Android', 'Game'],
-      description: 'Tic-Tac-Toe game built with Flutter. Singleplayer mode with a smart bot that blocks wins, takes wins, or plays randomly. 3x3 grid with max 3 per shape (oldest is dequeued). 2-player 7x7 mode with max 5 per shape.',
-      live: '#',
-      source: 'https://github.com/0Orchlon/Tic_Tac_Toe_Mandakh',
-      android: 'https://github.com/0Orchlon/Tic_Tac_Toe_Mandakh/releases/latest',
+      title: "TicTacToe",
+      tags: ["Flutter", "Dart", "Android", "Game"],
+      description:
+        "Tic-Tac-Toe game built with Flutter. Singleplayer mode with a smart bot that blocks wins, takes wins, or plays randomly. 3x3 grid with max 3 per shape (oldest is dequeued). 2-player 7x7 mode with max 5 per shape.",
+      live: "#",
+      source: "https://github.com/0Orchlon/Tic_Tac_Toe_Mandakh",
+      android:
+        "https://github.com/0Orchlon/Tic_Tac_Toe_Mandakh/releases/latest",
     },
   ],
 };

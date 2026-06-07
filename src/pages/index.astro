@@ -15,11 +15,12 @@ const projects = config.projects.map(p => ({
 
 <Layout>
   <Hub
-    client:load
+    client:idle
     avatar={config.avatar}
     name={config.name}
     tagline={config.tagline}
     bio={config.bio}
+    resume={config.resume}
     github={config.github}
     linkedin={config.linkedin}
     email={config.email}
@@ -30,9 +31,13 @@ const projects = config.projects.map(p => ({
     skillsMd={config.skills}
     projects={projects}
     githubUsers={config.githubUsers}
+    contact={config.contact}
     youtubeVideos={config.youtubeVideos}
     musicUrl={config.musicUrl}
     leetcode={config.leetcode}
     hackerrank={config.hackerrank}
   />
+  <footer class="fixed bottom-20 md:bottom-4 left-1/2 -translate-x-1/2 z-40 text-[10px] text-stone-700 pointer-events-none select-none">
+    Last updated June 2026
+  </footer>
 </Layout>

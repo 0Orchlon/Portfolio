@@ -23,6 +23,7 @@ interface Props {
   name: string;
   tagline: string;
   bio: string;
+  resume: string;
   location: string;
   education: string;
   hobbies: string;
@@ -36,6 +37,13 @@ interface Props {
     source: string;
     android?: string;
   }[];
+  contact: {
+    heading: string;
+    description: string;
+    emailLabel: string;
+    githubLabel: string;
+    linkedinLabel: string;
+  };
   githubUsers: string[];
   youtubeVideos: string[];
   leetcode: string;
@@ -68,7 +76,7 @@ function NavButton({ label, icon, active, onClick, side, skew, mobile }: {
             : 'text-white/40 border-transparent hover:text-white/70'
           }`}
       >
-        <span className="text-base leading-none">{icon}</span>
+        <span className="text-base leading-none" aria-hidden="true">{icon}</span>
         <span className="text-[10px] uppercase tracking-widest font-medium">{label}</span>
       </button>
     );
@@ -87,7 +95,7 @@ function NavButton({ label, icon, active, onClick, side, skew, mobile }: {
           : 'text-white/40 bg-white/[0.04] backdrop-blur-sm border-white/[0.06] hover:bg-white/[0.08] hover:text-white/70'
         }`}
     >
-      <span className="text-lg leading-none">{icon}</span>
+      <span className="text-lg leading-none" aria-hidden="true">{icon}</span>
       <span className="text-[10px] uppercase tracking-widest font-medium">{label}</span>
       <div className={`absolute top-1/2 -translate-y-1/2 w-4 h-px
         ${active ? 'bg-amber-500/40' : 'bg-white/10'}
@@ -102,6 +110,7 @@ export default function Hub(props: Props) {
   const [fading, setFading] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -111,6 +120,15 @@ export default function Hub(props: Props) {
   }, []);
 
   useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(() => {
+    if (reducedMotion) return;
     const handleMove = (e: MouseEvent) => {
       const cx = window.innerWidth / 2;
       const cy = window.innerHeight / 2;
@@ -121,7 +139,7 @@ export default function Hub(props: Props) {
     };
     window.addEventListener('mousemove', handleMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMove);
-  }, []);
+  }, [reducedMotion]);
 
   const handleNav = (id: Section) => {
     if (id === section) return;
@@ -135,34 +153,34 @@ export default function Hub(props: Props) {
   const renderSection = () => {
     const common = { github: props.github, linkedin: props.linkedin, email: props.email };
     switch (section) {
-      case 'home': return <HomeSection avatar={props.avatar} github={props.github} email={props.email} name={props.name} tagline={props.tagline} bio={props.bio} />;
+      case 'home': return <HomeSection avatar={props.avatar} github={props.github} email={props.email} name={props.name} tagline={props.tagline} bio={props.bio} resume={props.resume} />;
       case 'about': return <AboutSection avatar={props.avatar} location={props.location} education={props.education} hobbies={props.hobbies} aboutMd={props.aboutMd} />;
       case 'skills': return <SkillsSection skillsMd={props.skillsMd} />;
       case 'github': return <GitHubSection githubUsers={props.githubUsers} />;
       case 'leetcode': return <LeetCodeSection username={props.leetcode} />;
       case 'hackerrank': return <HackerRankSection username={props.hackerrank} />;
       case 'projects': return <ProjectsSection projects={props.projects} github={props.github} />;
-      case 'youtube': return <YouTubeSection videos={props.youtubeVideos} />;
-      case 'contact': return <ContactSection {...common} />;
+      case 'youtube': return props.youtubeVideos.length > 0 ? <YouTubeSection videos={props.youtubeVideos} /> : null;
+      case 'contact': return <ContactSection {...common} heading={props.contact.heading} description={props.contact.description} emailLabel={props.contact.emailLabel} githubLabel={props.contact.githubLabel} linkedinLabel={props.contact.linkedinLabel} />;
       case 'games': return <GamesSection />;
     }
   };
 
   return (
-    <div className="w-full h-screen bg-stone-950 flex flex-col md:flex-row md:items-center md:justify-center overflow-hidden">
+    <div className="hub-container w-full h-screen bg-stone-950 flex flex-col md:flex-row md:items-center md:justify-center overflow-hidden">
       <CodeRain />
 
       {/* Main content area with perspective */}
       <div className="flex-1 md:flex-none flex items-center justify-center transition-all duration-300 min-h-0"
         style={{
-          transform: isMobile ? 'none' : `perspective(1200px) rotateX(${rotateX - 4}deg) rotateY(${rotateY}deg)`,
+          transform: isMobile || reducedMotion ? 'none' : `perspective(1200px) rotateX(${rotateX - 4}deg) rotateY(${rotateY}deg)`,
         }}>
 
         {/* Desktop: Left Nav Column (curved along circle edge) */}
         {!isMobile && (
           <>
             <div className="flex flex-col items-end gap-2 z-20">
-              {(NAV_ITEMS.filter(i => i.side === 'left') as typeof NAV_ITEMS).map((item, idx, arr) => {
+              {(NAV_ITEMS.filter(i => i.side === 'left' && (i.id !== 'youtube' || props.youtubeVideos.length > 0)) as typeof NAV_ITEMS).map((item, idx, arr) => {
                 const spread = (idx - (arr.length - 1) / 2) * 5;
                 const skew = (idx - (arr.length - 1) / 2) * 5;
                 const curveX = spread * spread * 0.6 - 40;
@@ -189,7 +207,7 @@ export default function Hub(props: Props) {
         {!isMobile && (
           <>
             <div className="flex flex-col items-start gap-2 z-10 ml-1">
-              {(NAV_ITEMS.filter(i => i.side === 'right') as typeof NAV_ITEMS).map((item, idx, arr) => {
+              {(NAV_ITEMS.filter(i => i.side === 'right' && (i.id !== 'youtube' || props.youtubeVideos.length > 0)) as typeof NAV_ITEMS).map((item, idx, arr) => {
                 const spread = (idx - (arr.length - 1) / 2) * 5;
                 const skew = (idx - (arr.length - 1) / 2) * 2.5;
                 const curveX = -(spread * spread * 0.6 - 40);
@@ -208,7 +226,7 @@ export default function Hub(props: Props) {
       {isMobile && (
         <div className="flex-shrink-0 w-full overflow-x-auto bg-stone-950/90 backdrop-blur-md border-t border-stone-800/40 z-20">
           <div className="flex items-center justify-around px-1 py-1">
-            {NAV_ITEMS.map(item => (
+            {NAV_ITEMS.filter(i => i.id !== 'youtube' || props.youtubeVideos.length > 0).map(item => (
               <NavButton key={item.id} {...item} side={item.side} mobile active={section === item.id} onClick={() => handleNav(item.id)} />
             ))}
           </div>

@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 — Not Found">
+  <div class="w-full h-screen bg-stone-950 flex flex-col items-center justify-center gap-8 px-4">
+    <div class="relative w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border border-stone-700/40 bg-stone-900/80 flex items-center justify-center">
+      <!-- Replace with your Endfield image: -->
+      <!-- <img src="/Portfolio/assets/endfield-404.png" alt="" class="w-full h-full object-cover" /> -->
+      <span class="text-6xl md:text-8xl font-bold text-amber-400/30 select-none">404</span>
+    </div>
+    <h1 class="text-xl md:text-2xl font-bold text-amber-100 text-center">Lost in the Cold</h1>
+    <p class="text-stone-400 text-sm md:text-base text-center max-w-md">
+      This page doesn't exist. The navigation hub might have what you're looking for.
+    </p>
+    <a href="/Portfolio/"
+      class="px-5 py-2.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 rounded-lg text-sm hover:bg-amber-500/20 transition-colors">
+      Return to Hub
+    </a>
+  </div>
+</Layout>
