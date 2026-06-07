@@ -4,6 +4,10 @@
 
 export const config = {
   // ── Personal Info ──
+  name: 'BleakRed',
+  tagline: 'Developer · Junior · Creator',
+  bio: 'Junior developer crafting tools and experiences that feel alive. Currently based in Ulaanbaatar.',
+  
   avatar: 'https://github.com/bleakred.png',
   github: 'bleakred',
   linkedin: 'bleakred',

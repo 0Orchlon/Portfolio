@@ -55,7 +55,7 @@ function Heatmap({ days }: { days: Day[] }) {
           return (
             <div
               key={wi}
-              className="w-2 sm:w-3 text-[7px] sm:text-[8px] text-stone-600 leading-none"
+              className="w-2 sm:w-3 text-[8px] sm:text-[8px] text-stone-500 leading-none"
             >
               {label ? label.month : ""}
             </div>

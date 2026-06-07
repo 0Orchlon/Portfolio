@@ -20,6 +20,9 @@ interface Props {
   github: string;
   linkedin: string;
   email: string;
+  name: string;
+  tagline: string;
+  bio: string;
   location: string;
   education: string;
   hobbies: string;
@@ -59,14 +62,14 @@ function NavButton({ label, icon, active, onClick, side, skew, mobile }: {
   if (mobile) {
     return (
       <button onClick={onClick}
-        className={`flex flex-col items-center gap-0.5 py-2 px-3 transition-all duration-300 cursor-pointer whitespace-nowrap border-b-2
+        className={`flex flex-col items-center gap-0.5 py-3 px-3.5 transition-all duration-300 cursor-pointer whitespace-nowrap border-b-2
           ${active
             ? 'text-amber-400 border-amber-500'
             : 'text-white/40 border-transparent hover:text-white/70'
           }`}
       >
         <span className="text-base leading-none">{icon}</span>
-        <span className="text-[9px] uppercase tracking-widest font-medium">{label}</span>
+        <span className="text-[10px] uppercase tracking-widest font-medium">{label}</span>
       </button>
     );
   }
@@ -132,7 +135,7 @@ export default function Hub(props: Props) {
   const renderSection = () => {
     const common = { github: props.github, linkedin: props.linkedin, email: props.email };
     switch (section) {
-      case 'home': return <HomeSection avatar={props.avatar} github={props.github} email={props.email} />;
+      case 'home': return <HomeSection avatar={props.avatar} github={props.github} email={props.email} name={props.name} tagline={props.tagline} bio={props.bio} />;
       case 'about': return <AboutSection avatar={props.avatar} location={props.location} education={props.education} hobbies={props.hobbies} aboutMd={props.aboutMd} />;
       case 'skills': return <SkillsSection skillsMd={props.skillsMd} />;
       case 'github': return <GitHubSection githubUsers={props.githubUsers} />;
@@ -174,10 +177,10 @@ export default function Hub(props: Props) {
         )}
 
         {/* Center Circle */}
-        <div className="w-[85vw] h-[85vw] md:w-[75vh] md:h-[75vh] md:min-w-[400px] md:min-h-[400px] max-w-[780px] max-h-[780px] rounded-full bg-stone-900/80 backdrop-blur-md border border-stone-700/40 overflow-hidden relative shadow-2xl
+        <div className="w-[92vw] h-[92vw] md:w-[75vh] md:h-[75vh] md:min-w-[400px] md:min-h-[400px] max-w-[780px] max-h-[780px] rounded-full bg-stone-900/80 backdrop-blur-md border border-stone-700/40 overflow-hidden relative shadow-2xl
           before:absolute before:inset-3 before:rounded-full before:border before:border-stone-700/20 before:pointer-events-none before:hidden md:before:block
           after:absolute after:inset-[18px] after:rounded-full after:border after:border-stone-600/10 after:pointer-events-none after:hidden md:after:block">
-          <div className={`w-full h-full p-[10%] md:p-[15%] transition-all duration-300 ${fading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          <div className={`w-full h-full p-[5%] md:p-[15%] transition-all duration-300 ${fading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             {renderSection()}
           </div>
         </div>

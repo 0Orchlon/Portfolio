@@ -48,7 +48,7 @@ function Heatmap({ days }: { days: Day[] }) {
         {weeks.map((_, wi) => {
           const label = labels.find(l => l.col === wi);
           return (
-            <div key={wi} className="w-2 sm:w-3 text-[7px] sm:text-[8px] text-stone-600 leading-none">
+            <div key={wi} className="w-2 sm:w-3 text-[8px] sm:text-[8px] text-stone-500 leading-none">
               {label ? label.month : ''}
             </div>
           );
@@ -78,10 +78,75 @@ function Heatmap({ days }: { days: Day[] }) {
   );
 }
 
+interface Badge {
+  id: string;
+  displayName: string;
+  icon: string;
+  creationDate: string;
+}
+
+interface BadgesResponse {
+  badgesCount: number;
+  badges: Badge[];
+  upcomingBadges: { name: string; icon: string }[];
+  activeBadge: Badge | null;
+}
+
 interface CalendarData {
   submissionCalendar: string;
   streak: number;
   totalActiveDays: number;
+}
+
+function BadgesGrid({ badges, upcoming }: { badges: Badge[]; upcoming: { name: string; icon: string }[] }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex flex-wrap gap-3">
+        {badges.map(badge => (
+          <div
+            key={badge.id}
+            className="flex flex-col items-center gap-1.5 p-2.5 bg-stone-800/50 rounded-lg border border-stone-700/50 w-24"
+          >
+            <img
+              src={badge.icon}
+              alt={badge.displayName}
+              className="w-8 h-8 object-contain"
+              loading="lazy"
+            />
+            <span className="text-[11px] text-stone-300 text-center leading-tight">
+              {badge.displayName}
+            </span>
+            <span className="text-[10px] text-stone-500">
+              {new Date(badge.creationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+          </div>
+        ))}
+      </div>
+      {upcoming.length > 0 && (
+        <div>
+          <span className="text-xs text-stone-600 mb-2 block">Upcoming</span>
+          <div className="flex flex-wrap gap-3">
+            {upcoming.map(b => (
+              <div
+                key={b.name}
+                className="flex flex-col items-center gap-1.5 p-2.5 bg-stone-900/30 rounded-lg border border-stone-800/50 w-24 opacity-50"
+              >
+                <img
+                  src={`https://leetcode.com${b.icon}`}
+                  alt={b.name}
+                  className="w-8 h-8 object-contain grayscale"
+                  loading="lazy"
+                />
+                <span className="text-[11px] text-stone-500 text-center leading-tight">
+                  {b.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function buildDays(calendarStr: string): Day[] {
@@ -106,6 +171,7 @@ function buildDays(calendarStr: string): Day[] {
 export default function LeetCodeSection({ username }: { username: string }) {
   const [stats, setStats] = useState<LeetCodeStats | null>(null);
   const [calendar, setCalendar] = useState<CalendarData | null>(null);
+  const [badges, setBadges] = useState<BadgesResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -122,8 +188,9 @@ export default function LeetCodeSection({ username }: { username: string }) {
       fetch(`https://alfa-leetcode-api.onrender.com/${username}`, { signal: controller.signal }),
       fetch(`https://alfa-leetcode-api.onrender.com/${username}/solved`, { signal: controller.signal }),
       fetch(`https://alfa-leetcode-api.onrender.com/${username}/calendar`, { signal: controller.signal }),
+      fetch(`https://alfa-leetcode-api.onrender.com/${username}/badges`, { signal: controller.signal }),
     ])
-      .then(async ([profileRes, solvedRes, calRes]) => {
+      .then(async ([profileRes, solvedRes, calRes, badgesRes]) => {
         const profile = profileRes.ok ? await profileRes.json() : {};
         if (!solvedRes.ok) throw new Error(`stats HTTP ${solvedRes.status}`);
         const s = await solvedRes.json();
@@ -144,6 +211,11 @@ export default function LeetCodeSection({ username }: { username: string }) {
               totalActiveDays: c.totalActiveDays ?? 0,
             });
           }
+        }
+
+        if (badgesRes.ok) {
+          const b = await badgesRes.json();
+          if (b.badges) setBadges(b);
         }
 
         setLoading(false);
@@ -218,13 +290,24 @@ export default function LeetCodeSection({ username }: { username: string }) {
       </div>
 
       {calendar && days.length > 0 && (
-        <div className="p-4 bg-stone-800/50 rounded-lg border border-stone-700/50">
+        <div className="p-4 bg-stone-800/50 rounded-lg border border-stone-700/50 mb-3">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs text-stone-400">
               {calendar.streak} day streak · {calendar.totalActiveDays} active days
             </span>
           </div>
           <Heatmap days={days} />
+        </div>
+      )}
+
+      {badges && badges.badges.length > 0 && (
+        <div className="p-4 bg-stone-800/50 rounded-lg border border-stone-700/50">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs text-stone-400">
+              Badges · {badges.badgesCount}
+            </span>
+          </div>
+          <BadgesGrid badges={badges.badges} upcoming={badges.upcomingBadges} />
         </div>
       )}
     </div>

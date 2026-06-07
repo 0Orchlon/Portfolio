@@ -26,7 +26,7 @@ export default function AboutSection({ avatar, location, education, hobbies, abo
           { label: 'Hobbies', value: hobbies },
         ].map(item => (
           <div key={item.label} className="p-3 bg-stone-800/50 rounded-lg border border-stone-700/50">
-            <p className="text-amber-400/60 text-[10px] mb-1 uppercase tracking-wider">{item.label}</p>
+            <p className="text-amber-400/60 text-[11px] mb-1 uppercase tracking-wider">{item.label}</p>
             <p className="text-stone-300 text-xs">{item.value}</p>
           </div>
         ))}

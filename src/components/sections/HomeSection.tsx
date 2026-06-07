@@ -2,19 +2,21 @@ interface Props {
   avatar: string;
   github: string;
   email: string;
+  name: string;
+  tagline: string;
+  bio: string;
 }
 
-export default function HomeSection({ avatar, github, email }: Props) {
+export default function HomeSection({ avatar, github, email, name, tagline, bio }: Props) {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-5 animate-fadeIn">
-      <img src={avatar} alt="BleakRed"
+      <img src={avatar} alt={name}
         className="w-20 h-20 md:w-28 md:h-28 rounded-full object-cover shadow-lg shadow-amber-900/30 flex-shrink-0" />
       <div className="text-center">
-        <h1 className="text-2xl md:text-3xl font-bold text-amber-100 mb-1">BleakRed</h1>
-        <p className="text-amber-400/80 text-sm md:text-base mb-3">Developer · Student · Creator</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-amber-100 mb-1">{name}</h1>
+        <p className="text-amber-400/80 text-sm md:text-base mb-3">{tagline}</p>
         <p className="text-stone-400 text-xs md:text-sm leading-relaxed max-w-xs mx-auto">
-          Final-year developer crafting tools and experiences that feel alive.
-          Currently based in Ulaanbaatar.
+          {bio}
         </p>
       </div>
       <div className="flex gap-3">

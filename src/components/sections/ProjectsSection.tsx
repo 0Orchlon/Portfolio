@@ -24,7 +24,7 @@ export default function ProjectsSection({ projects, github }: Props) {
             <p className="text-stone-400 text-xs mb-3 leading-relaxed">{p.desc}</p>
             <div className="flex flex-wrap gap-1.5 mb-3">
               {p.tags.map(t => (
-                <span key={t} className="text-[10px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400/80 rounded">{t}</span>
+                <span key={t} className="text-[11px] px-1.5 py-0.5 bg-amber-500/10 text-amber-400/80 rounded">{t}</span>
               ))}
             </div>
             <div className="flex gap-3">
