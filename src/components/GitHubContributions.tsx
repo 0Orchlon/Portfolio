@@ -119,7 +119,7 @@ function AccountGraph({ username }: { username: string }) {
     );
   }
 
-  const last26 = days.slice(-182);
+  const last26 = days.slice(0, 182).reverse();
 
   return (
     <div>
